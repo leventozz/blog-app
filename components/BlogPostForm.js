@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 
-export default function BlogPostForm() {
+export default function BlogPostForm({onSubmit}) {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
     return (
@@ -20,7 +20,10 @@ export default function BlogPostForm() {
                 multiline
                 numberOfLines={8}
             />
-            <TouchableOpacity style={styles.buttonMain}>
+            <TouchableOpacity
+                style={styles.buttonMain}
+                onPress={()=> onSubmit(title, content) }
+            >
                 <View style={styles.buttonView}>
                     <Text style={styles.buttonText}>Save</Text>
                 </View>
