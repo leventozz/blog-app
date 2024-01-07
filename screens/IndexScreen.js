@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import { Context } from '../context/BlogContext'
 import { AntDesign } from '@expo/vector-icons';
 
-export default function IndexScreen() {
+export default function IndexScreen({ navigation }) {
   const { state, addBlogPost, deleteBlogPost } = useContext(Context);
   return (
     <View>
@@ -16,14 +16,18 @@ export default function IndexScreen() {
         keyExtractor={blogPost => blogPost.id}
         renderItem={({ item }) => {
           return (
-            <View style={styles.row}>
-              <Text style={styles.title}>
-                {item.title}
-              </Text>
-              <TouchableOpacity>
-                <AntDesign name="delete" size={24} color="black" onPress={() => deleteBlogPost(item.id)} />
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Blog',{id:item.id})}
+            >
+              <View style={styles.row}>
+                <Text style={styles.title}>
+                  {item.title}
+                </Text>
+                <TouchableOpacity>
+                  <AntDesign name="delete" size={24} color="black" onPress={() => deleteBlogPost(item.id)} />
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
           )
         }}
       />

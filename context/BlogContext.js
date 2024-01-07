@@ -4,7 +4,8 @@ import CreateDataContext from './CreateDataContext'
 const blogReducer = (state, action) => {
     switch (action.type) {
         case 'add_blogpost':
-            return [...state, { id: Math.floor(Math.random() * 999).toString(), title: 'Vue Js' }];
+            const rndValue = Math.floor(Math.random() * 999).toString()
+            return [...state, { id: rndValue, title: rndValue }];
         case 'del_blogpost':
             return state.filter((blogPost) => blogPost.id !== action.payload);
         default:
