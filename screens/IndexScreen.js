@@ -7,9 +7,11 @@ export default function IndexScreen({ navigation }) {
   const { state, addBlogPost, deleteBlogPost, getBlogPosts } = useContext(Context);
 
   //one time request
-  useEffect(()=>{
+  useEffect(() => {
     getBlogPosts();
-  },[])
+    const listener = navigation.addListener('focus', () => getBlogPosts());
+    return () => { listener.remove() }
+  }, []);
 
   //everytime request
   //useEffect(() => {
