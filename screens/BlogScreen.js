@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View,ScrollView } from 'react-native'
 import React, { useContext } from 'react'
 import { Context } from '../context/BlogContext'
 
@@ -6,7 +6,7 @@ export default function BlogScreen({ route }) {
   const { state } = useContext(Context)
   const blogPost = state.find((blogPost) => blogPost.id === route.params.id)
   return (
-    <View style={styles.mainContainer}>
+    <ScrollView style={styles.mainContainer}>
       <View style={styles.container}>
         <Text style={styles.title}>{blogPost.title}</Text>
       </View>
@@ -14,7 +14,7 @@ export default function BlogScreen({ route }) {
       <View>
         <Text style={styles.content}>{blogPost.content}</Text>
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
