@@ -1,10 +1,21 @@
-import { FlatList, StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native'
-import React, { useContext } from 'react'
+import { FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import React, { useContext, useEffect } from 'react'
 import { Context } from '../context/BlogContext'
 import { AntDesign } from '@expo/vector-icons';
 
 export default function IndexScreen({ navigation }) {
-  const { state, addBlogPost, deleteBlogPost } = useContext(Context);
+  const { state, addBlogPost, deleteBlogPost, getBlogPosts } = useContext(Context);
+
+  //one time request
+  useEffect(()=>{
+    getBlogPosts();
+  },[])
+
+  //everytime request
+  //useEffect(() => {
+  //  getBlogPosts();
+  //})
+
   return (
     <View>
       <FlatList
@@ -13,7 +24,7 @@ export default function IndexScreen({ navigation }) {
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
-              onPress={() => navigation.navigate('Blog',{id:item.id})}
+              onPress={() => navigation.navigate('Blog', { id: item.id })}
             >
               <View style={styles.row}>
                 <Text style={styles.title}>
@@ -30,6 +41,7 @@ export default function IndexScreen({ navigation }) {
     </View>
   )
 }
+
 
 const styles = StyleSheet.create({
   row: {
