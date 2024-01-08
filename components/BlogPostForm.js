@@ -1,11 +1,13 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 
-export default function BlogPostForm({onSubmit}) {
-    const [title, setTitle] = useState('')
-    const [content, setContent] = useState('')
+export default function BlogPostForm({onSubmit, initialValues}) {
+
+    const [title, setTitle] = useState(initialValues ? initialValues.title : '')
+    const [content, setContent] = useState(initialValues ? initialValues.content : '')
+    
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <Text style={styles.label}>Title:</Text>
             <TextInput
                 style={styles.input}
@@ -28,7 +30,7 @@ export default function BlogPostForm({onSubmit}) {
                     <Text style={styles.buttonText}>Save</Text>
                 </View>
             </TouchableOpacity>
-        </View>
+        </ScrollView>
     )
 }
 
