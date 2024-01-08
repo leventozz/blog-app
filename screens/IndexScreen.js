@@ -13,8 +13,13 @@ export default function IndexScreen({ navigation }) {
     {
       getBlogPosts();
     });
-    return () => { listener.remove(); }
-  }, []);
+
+    return () => { 
+      if (listener) {
+        listener(); 
+    }
+  }
+  }, [navigation]);
 
   //everytime request
   //useEffect(() => {
