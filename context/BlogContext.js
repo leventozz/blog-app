@@ -4,22 +4,18 @@ import JsonServer from "../api/JsonServer";
 
 const blogReducer = (state, action) => {
     switch (action.type) {
-        case 'add_blogpost':
-            const rndValue = Math.floor(Math.random() * 999).toString()
-            return [...state,
-            {
-                id: rndValue,
-                title: action.payload.title,
-                content: action.payload.content
-            }];
-        case 'del_blogpost':
-            return state.filter((blogPost) => blogPost.id !== action.payload);
         case 'update_blogpost':
             return state.map((blogPost) => {
                 return blogPost.id === action.payload.id ? action.payload : blogPost
             })
         case 'get_blogpost':
             return action.payload;
+        case 'delete_blogpost':
+            return state.filter((blogPost) => blogPost.id !== action.payload);
+        case 'update_blogpost':
+            return state.map((blogPost) => {
+                return blogPost.id === action.payload.id ? action.payload : blogPost
+            })
         default:
             return state;
     }
@@ -27,7 +23,7 @@ const blogReducer = (state, action) => {
 
 const addBlogPost = (dispatch) => {
     return async (title, content, callback) => {
-        await JsonServer.post('/blogPosts',{title,content})
+        await JsonServer.post('/blogPosts', { title, content })
         if (callback) {
             callback();
         }
@@ -35,13 +31,15 @@ const addBlogPost = (dispatch) => {
 }
 
 const deleteBlogPost = (dispatch) => {
-    return (id) => {
-        dispatch({ type: 'del_blogpost', payload: id })
+    return async (id) => {
+        await JsonServer.delete(`/blogPosts/${id}`)
+        dispatch({ type: 'delete_blogpost', payload: id });
     }
 }
 
 const updateBlogPost = (dispatch) => {
-    return (id, title, content, callback) => {
+    return async (id, title, content, callback) => {
+        await JsonServer.put(`/blogPosts/${id}`, { title, content })
         dispatch({ type: 'update_blogpost', payload: { id, title, content } })
         if (callback) {
             callback();

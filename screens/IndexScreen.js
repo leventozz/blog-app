@@ -9,8 +9,11 @@ export default function IndexScreen({ navigation }) {
   //one time request
   useEffect(() => {
     getBlogPosts();
-    const listener = navigation.addListener('focus', () => getBlogPosts());
-    return () => { listener.remove() }
+    const listener = navigation.addListener('focus', () => 
+    {
+      getBlogPosts();
+    });
+    return () => { listener.remove(); }
   }, []);
 
   //everytime request
